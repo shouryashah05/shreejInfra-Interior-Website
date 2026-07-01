@@ -1,0 +1,298 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "DM Sans", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-navy: #172941;
+  --color-gold: #C5A880;
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  /* Brand color scheme */
+  --white: #ffffff;
+  --light-gray: #f8f9fa;
+  --dark-gray: #888a8c;
+  
+  --primary: #172941; /* Navy Blue */
+  --primary-foreground: #ffffff;
+  
+  --accent: #C5A880; /* Gold */
+  --accent-foreground: #ffffff;
+  
+  --radius: 0rem; /* Sharp luxury design, no rounded corners */
+
+  /* Semantic Colors - 80-90% white background */
+  --background: #ffffff;
+  --foreground: #212529; /* Dark gray/black body text */
+  --card: #ffffff;
+  --card-foreground: #172941;
+  --popover: #ffffff;
+  --popover-foreground: #172941;
+  --secondary: #f8f9fa;
+  --secondary-foreground: #172941;
+  --muted: #f8f9fa;
+  --muted-foreground: #888a8c;
+  --destructive: #dc3545;
+  --destructive-foreground: #ffffff;
+  --border: #eaeaea;
+  --input: #eaeaea;
+  --ring: #C5A880;
+}
+
+.dark {
+  /* Keep standard light layout since luxury branding is white/blue/gold */
+  --primary: #C5A880;
+  --primary-foreground: #172941;
+  --background: #172941;
+  --foreground: #ffffff;
+  --card: #1f314c;
+  --card-foreground: #ffffff;
+  --popover: #1f314c;
+  --popover-foreground: #ffffff;
+  --secondary: #1f314c;
+  --secondary-foreground: #ffffff;
+  --muted: #2d4260;
+  --muted-foreground: #eaeaea;
+  --border: #2d4260;
+  --input: #2d4260;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-weight: 300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+    font-weight: 200;
+    letter-spacing: 0.05em;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 90%;
+  }
+
+  /* Clip-path Hover Buttons (.btnA) */
+  .btnA {
+    border-radius: 0;
+    padding: 12px 24px;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    z-index: 2;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  .btnA::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.5s ease-in-out;
+    clip-path: inset(0 55% 0 45%);
+    z-index: -1;
+  }
+
+  .btnA:hover::after {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .btnA span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-primary {
+    @apply bg-navy text-white border border-navy;
+  }
+  .btn-primary::after {
+    @apply bg-white;
+  }
+  .btn-primary:hover {
+    @apply text-navy border-white;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-navy border border-white;
+  }
+  .btn-secondary::after {
+    @apply bg-navy;
+  }
+  .btn-secondary:hover {
+    @apply text-white border border-gold;
+  }
+
+  .btn-transparent {
+    @apply bg-transparent text-white border border-white;
+  }
+  .btn-transparent::after {
+    @apply bg-white;
+  }
+  .btn-transparent:hover {
+    @apply text-navy;
+  }
+
+  /* Ken Burns Zoom Effect */
+  @keyframes kenburns {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .zoom-animation {
+    animation: kenburns 24s ease-in-out infinite;
+  }
+
+  /* WhatsApp pulse pulse ring animation */
+  .whatsapp-pulse {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    right: 20px;
+    bottom: 20px;
+    background: #2ecc71;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  
+  .whatsapp-pulse:before {
+    position: absolute;
+    content: " ";
+    z-index: -1;
+    inset: -10px;
+    background-color: #2ecc71;
+    border-radius: 100%;
+    opacity: 0.6;
+    animation: pulse 1.8s ease-out infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+    25% {
+      transform: scale(0.8);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.4;
+    }
+    75% {
+      transform: scale(1.2);
+      opacity: 0.1;
+    }
+    100% {
+      transform: scale(1.3);
+      opacity: 0;
+    }
+  }
+
+  /* Infinite marquee scroll animations */
+  @keyframes marquee-left {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes marquee-right {
+    0% {
+      transform: translate3d(-50%, 0, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-marquee-left {
+    animation: marquee-left var(--marquee-duration, 40s) linear infinite;
+  }
+
+  .animate-marquee-right {
+    animation: marquee-right var(--marquee-duration, 40s) linear infinite;
+  }
+
+  .hover-pause:hover .animate-marquee-left,
+  .hover-pause:hover .animate-marquee-right {
+    animation-play-state: paused;
+  }
+}
+
